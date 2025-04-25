@@ -163,6 +163,12 @@
             border-radius: 10px;
             transform-origin: left center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .branch:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
         .branch-1 {
@@ -181,22 +187,21 @@
             transform: rotate(-30deg);
         }
 
-        .branch-3 {
-            width: 100px;
-            height: 4px;
-            bottom: 25%;
-            left: -15px;
-            transform: rotate(60deg);
-        }
-
         .leaf {
             position: absolute;
             width: 15px;
             height: 15px;
-            background: #4CAF50;
+            background: linear-gradient(45deg, #4CAF50, #81C784);
             border-radius: 50% 0 50% 0;
             transform-origin: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            animation: float 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .leaf:hover {
+            transform: scale(1.2) rotate(15deg);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
         .leaf::before {
@@ -206,7 +211,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #4CAF50;
+            background: linear-gradient(45deg, #4CAF50, #81C784);
             border-radius: 50% 0 50% 0;
             transform: rotate(45deg);
         }
@@ -214,15 +219,21 @@
         .leaf-1 { top: 10%; left: 5%; transform: rotate(30deg); }
         .leaf-2 { top: 25%; right: 8%; transform: rotate(-45deg); }
         .leaf-3 { bottom: 20%; left: 15%; transform: rotate(60deg); }
-        .leaf-4 { top: 40%; left: 25%; transform: rotate(-30deg); }
 
         .cherry-blossom {
             position: absolute;
             width: 12px;
             height: 12px;
-            background: #ffd1dc;
+            background: linear-gradient(45deg, #ffd1dc, #ffb6c1);
             border-radius: 50%;
             box-shadow: 0 0 5px rgba(255, 209, 220, 0.5);
+            animation: float 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .cherry-blossom:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 8px rgba(255, 209, 220, 0.7);
         }
 
         .cherry-blossom::before {
@@ -233,22 +244,28 @@
             transform: translateX(-50%);
             width: 2px;
             height: 6px;
-            background: #8B4513;
+            background: linear-gradient(to bottom, #8B4513, #A0522D);
             border-radius: 2px;
         }
 
         .blossom-1 { top: 12%; left: 8%; }
         .blossom-2 { top: 28%; right: 12%; }
         .blossom-3 { bottom: 22%; left: 18%; }
-        .blossom-4 { top: 42%; left: 28%; }
 
         .cherry {
             position: absolute;
             width: 12px;
             height: 12px;
-            background: #ff6b6b;
+            background: linear-gradient(45deg, #ff6b6b, #ff8c8c);
             border-radius: 50%;
             box-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+            animation: float 3.5s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .cherry:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 8px rgba(255, 107, 107, 0.7);
         }
 
         .cherry::before {
@@ -259,14 +276,13 @@
             transform: translateX(-50%);
             width: 2px;
             height: 6px;
-            background: #8B4513;
+            background: linear-gradient(to bottom, #8B4513, #A0522D);
             border-radius: 2px;
         }
 
         .cherry-1 { top: 15%; left: 10%; }
         .cherry-2 { top: 35%; right: 15%; }
         .cherry-3 { bottom: 25%; left: 20%; }
-        .cherry-4 { top: 45%; left: 30%; }
 
         .profile-section:hover {
             transform: translateY(-10px);
@@ -336,8 +352,22 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg);
+                filter: brightness(1);
+            }
+            25% { 
+                transform: translateY(-5px) rotate(5deg);
+                filter: brightness(1.1);
+            }
+            50% { 
+                transform: translateY(0) rotate(0deg);
+                filter: brightness(1);
+            }
+            75% { 
+                transform: translateY(5px) rotate(-5deg);
+                filter: brightness(0.9);
+            }
         }
 
         .profile-info {
@@ -391,6 +421,31 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             padding: 0 5px;
+            position: relative;
+            display: inline-block;
+            animation: glow 2s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .bio span:hover {
+            transform: scale(1.05);
+        }
+
+        .bio span::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(45deg, var(--bg-color-1, #ff6b6b), var(--bg-color-2, #ffc0cb));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .bio span:hover::after {
+            transform: scaleX(1);
         }
 
         .about-section {
@@ -581,17 +636,24 @@
         }
 
         @keyframes shine {
-            0% {
-                transform: translateX(-100%) rotate(45deg);
-            }
-            100% {
-                transform: translateX(100%) rotate(45deg);
-            }
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
         }
 
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(255, 107, 107, 0.3),
+                            0 0 20px rgba(255, 192, 203, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(255, 107, 107, 0.5),
+                            0 0 30px rgba(255, 192, 203, 0.5);
+            }
         }
 
         @media (max-width: 768px) {
@@ -707,6 +769,39 @@
         .branch {
             animation: sway 4s ease-in-out infinite;
         }
+
+        .custom-context-menu {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .context-menu-item {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .context-menu-item:hover {
+            background: linear-gradient(45deg, var(--bg-color-1, #ff6b6b), var(--bg-color-2, #ffc0cb));
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .context-menu-item i {
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
@@ -729,23 +824,25 @@
     <div class="floating-icon"><i class="fab fa-discord"></i></div>
 
     <div class="content">
+        <div class="custom-context-menu">
+            <a href="https://www.youtube.com/@Lemonie_YT" target="_blank" class="context-menu-item">
+                <i class="fab fa-youtube"></i>
+                Subscribe to my YouTube! 🍋
+            </a>
+        </div>
         <div class="profile-section">
             <div class="branch-decoration">
                 <div class="branch branch-1"></div>
                 <div class="branch branch-2"></div>
-                <div class="branch branch-3"></div>
                 <div class="leaf leaf-1"></div>
                 <div class="leaf leaf-2"></div>
                 <div class="leaf leaf-3"></div>
-                <div class="leaf leaf-4"></div>
                 <div class="cherry-blossom blossom-1"></div>
                 <div class="cherry-blossom blossom-2"></div>
                 <div class="cherry-blossom blossom-3"></div>
-                <div class="cherry-blossom blossom-4"></div>
                 <div class="cherry cherry-1"></div>
                 <div class="cherry cherry-2"></div>
                 <div class="cherry cherry-3"></div>
-                <div class="cherry cherry-4"></div>
             </div>
             <div class="profile">
                 <img src="me3.webp" alt="Profile Picture">
@@ -770,19 +867,15 @@
             <div class="branch-decoration">
                 <div class="branch branch-1"></div>
                 <div class="branch branch-2"></div>
-                <div class="branch branch-3"></div>
                 <div class="leaf leaf-1"></div>
                 <div class="leaf leaf-2"></div>
                 <div class="leaf leaf-3"></div>
-                <div class="leaf leaf-4"></div>
                 <div class="cherry-blossom blossom-1"></div>
                 <div class="cherry-blossom blossom-2"></div>
                 <div class="cherry-blossom blossom-3"></div>
-                <div class="cherry-blossom blossom-4"></div>
                 <div class="cherry cherry-1"></div>
                 <div class="cherry cherry-2"></div>
                 <div class="cherry cherry-3"></div>
-                <div class="cherry cherry-4"></div>
             </div>
             <div class="about-content">
                 <div class="about-item">
@@ -858,6 +951,29 @@
 
         // Create blossoms periodically
         setInterval(createCherryBlossom, 500);
+
+        // Custom context menu
+        const contextMenu = document.querySelector('.custom-context-menu');
+        const profileSection = document.querySelector('.profile-section');
+
+        document.addEventListener('contextmenu', (e) => {
+            if (profileSection.contains(e.target)) {
+                e.preventDefault();
+                contextMenu.style.display = 'block';
+                contextMenu.style.left = e.pageX + 'px';
+                contextMenu.style.top = e.pageY + 'px';
+            }
+        });
+
+        document.addEventListener('click', () => {
+            contextMenu.style.display = 'none';
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                contextMenu.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
