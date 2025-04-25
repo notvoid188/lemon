@@ -114,24 +114,163 @@
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             animation: slideIn 1s ease;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
-        .profile-section:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        .profile-section::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 200px;
+            height: 200px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,0 Q80,30 100,50 Q80,70 50,100 Q20,70 0,50 Q20,30 50,0" fill="%23ffd1dc" opacity="0.3"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(45deg);
+            pointer-events: none;
+            z-index: 1;
         }
 
         .profile-section::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            bottom: -30px;
+            left: -30px;
+            width: 250px;
+            height: 250px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,50 Q30,20 50,0 Q70,20 100,50 Q70,80 50,100 Q30,80 0,50" fill="%23ffd1dc" opacity="0.3"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(-30deg);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .branch-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .branch {
+            position: absolute;
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            border-radius: 10px;
+            transform-origin: left center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .branch-1 {
+            width: 150px;
+            height: 6px;
+            top: 15%;
+            left: -20px;
             transform: rotate(45deg);
-            animation: shine 3s infinite;
+        }
+
+        .branch-2 {
+            width: 120px;
+            height: 5px;
+            top: 35%;
+            right: -15px;
+            transform: rotate(-30deg);
+        }
+
+        .branch-3 {
+            width: 100px;
+            height: 4px;
+            bottom: 25%;
+            left: -15px;
+            transform: rotate(60deg);
+        }
+
+        .leaf {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #4CAF50;
+            border-radius: 50% 0 50% 0;
+            transform-origin: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .leaf::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #4CAF50;
+            border-radius: 50% 0 50% 0;
+            transform: rotate(45deg);
+        }
+
+        .leaf-1 { top: 10%; left: 5%; transform: rotate(30deg); }
+        .leaf-2 { top: 25%; right: 8%; transform: rotate(-45deg); }
+        .leaf-3 { bottom: 20%; left: 15%; transform: rotate(60deg); }
+        .leaf-4 { top: 40%; left: 25%; transform: rotate(-30deg); }
+
+        .cherry-blossom {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #ffd1dc;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(255, 209, 220, 0.5);
+        }
+
+        .cherry-blossom::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 6px;
+            background: #8B4513;
+            border-radius: 2px;
+        }
+
+        .blossom-1 { top: 12%; left: 8%; }
+        .blossom-2 { top: 28%; right: 12%; }
+        .blossom-3 { bottom: 22%; left: 18%; }
+        .blossom-4 { top: 42%; left: 28%; }
+
+        .cherry {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+        }
+
+        .cherry::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 6px;
+            background: #8B4513;
+            border-radius: 2px;
+        }
+
+        .cherry-1 { top: 15%; left: 10%; }
+        .cherry-2 { top: 35%; right: 15%; }
+        .cherry-3 { bottom: 25%; left: 20%; }
+        .cherry-4 { top: 45%; left: 30%; }
+
+        .profile-section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
 
         .profile {
@@ -139,6 +278,7 @@
             align-items: center;
             gap: 40px;
             margin-bottom: 30px;
+            position: relative;
         }
 
         .profile img {
@@ -150,11 +290,54 @@
             animation: float 6s ease-in-out infinite;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            position: relative;
         }
 
         .profile img:hover {
-            transform: rotate(180deg);
+            transform: scale(1.05);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .hover-message {
+            position: absolute;
+            top: 50%;
+            left: -250px;
+            transform: translate(0, -50%) scale(0);
+            background: linear-gradient(45deg, var(--bg-color-1, #ff6b6b), var(--bg-color-2, #ffc0cb));
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 15px;
+            font-size: 1em;
+            white-space: nowrap;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 3;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .hover-message::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -8px;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid var(--bg-color-2, #ffc0cb);
+        }
+
+        .profile img:hover + .hover-message {
+            transform: translate(0, -50%) scale(1);
+            opacity: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .profile-info {
@@ -232,6 +415,7 @@
             margin-bottom: 20px;
             text-align: center;
             position: relative;
+            padding: 20px;
         }
 
         .about-title::after {
@@ -496,12 +680,32 @@
         }
 
         @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(5px) rotate(-5deg); }
+        }
+
+        .leaf, .cherry-blossom, .cherry {
+            animation: float 4s ease-in-out infinite, sway 3s ease-in-out infinite;
+        }
+
+        .leaf-1, .cherry-blossom-1, .cherry-1 { animation-delay: 0s; }
+        .leaf-2, .cherry-blossom-2, .cherry-2 { animation-delay: 0.5s; }
+        .leaf-3, .cherry-blossom-3, .cherry-3 { animation-delay: 1s; }
+        .leaf-4, .cherry-blossom-4, .cherry-4 { animation-delay: 1.5s; }
+        .leaf-5, .cherry-blossom-5, .cherry-5 { animation-delay: 2s; }
+        .leaf-6, .cherry-blossom-6, .cherry-6 { animation-delay: 2.5s; }
+        .leaf-7, .cherry-blossom-7, .cherry-7 { animation-delay: 3s; }
+        .leaf-8, .cherry-blossom-8, .cherry-8 { animation-delay: 3.5s; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .branch {
+            animation: sway 4s ease-in-out infinite;
         }
     </style>
 </head>
@@ -526,8 +730,26 @@
 
     <div class="content">
         <div class="profile-section">
+            <div class="branch-decoration">
+                <div class="branch branch-1"></div>
+                <div class="branch branch-2"></div>
+                <div class="branch branch-3"></div>
+                <div class="leaf leaf-1"></div>
+                <div class="leaf leaf-2"></div>
+                <div class="leaf leaf-3"></div>
+                <div class="leaf leaf-4"></div>
+                <div class="cherry-blossom blossom-1"></div>
+                <div class="cherry-blossom blossom-2"></div>
+                <div class="cherry-blossom blossom-3"></div>
+                <div class="cherry-blossom blossom-4"></div>
+                <div class="cherry cherry-1"></div>
+                <div class="cherry cherry-2"></div>
+                <div class="cherry cherry-3"></div>
+                <div class="cherry cherry-4"></div>
+            </div>
             <div class="profile">
                 <img src="me3.webp" alt="Profile Picture">
+                <div class="hover-message">Hey there! I'm Lemonie 🍋</div>
                 <div class="profile-info">
                     <h1 class="name">𝑳𝒆𝒎𝒐𝒏𝒊𝒆</h1>
                     <p class="bio">✨<span>𝘊𝘰𝘯𝘵𝘦𝘯𝘵 𝘊𝘳𝘦𝘢𝘵𝘰𝘳 | 𝘎𝘢𝘮𝘦𝘳 𝘎𝘪𝘳𝘭</span>✨<br>
@@ -545,6 +767,23 @@
 
         <div class="about-section">
             <h2 class="about-title">𝐴𝑏𝑜𝑢𝑡 𝑀𝑒</h2>
+            <div class="branch-decoration">
+                <div class="branch branch-1"></div>
+                <div class="branch branch-2"></div>
+                <div class="branch branch-3"></div>
+                <div class="leaf leaf-1"></div>
+                <div class="leaf leaf-2"></div>
+                <div class="leaf leaf-3"></div>
+                <div class="leaf leaf-4"></div>
+                <div class="cherry-blossom blossom-1"></div>
+                <div class="cherry-blossom blossom-2"></div>
+                <div class="cherry-blossom blossom-3"></div>
+                <div class="cherry-blossom blossom-4"></div>
+                <div class="cherry cherry-1"></div>
+                <div class="cherry cherry-2"></div>
+                <div class="cherry cherry-3"></div>
+                <div class="cherry cherry-4"></div>
+            </div>
             <div class="about-content">
                 <div class="about-item">
                     <i class="fas fa-gamepad"></i>
