@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lemonie Portfolio</title>
+    <link rel="icon" type="image/webp" href="me3.webp">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(45deg, var(--bg-color-1, #ff6b6b), var(--bg-color-2, #ffc0cb));
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            transition: background 0.5s ease;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: -1;
+            transition: opacity 0.5s ease;
+        }
+
+        .color-picker {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .color-picker input {
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .copyright {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            color: #666;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            animation: fadeIn 1s ease;
+        }
+
+        .puzzle-piece {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            animation: floatPuzzle 8s infinite;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .puzzle-piece:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .puzzle-piece:nth-child(2) { top: 20%; right: 10%; animation-delay: 1s; }
+        .puzzle-piece:nth-child(3) { bottom: 15%; left: 15%; animation-delay: 2s; }
+        .puzzle-piece:nth-child(4) { bottom: 25%; right: 20%; animation-delay: 3s; }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2em;
+            color: rgba(255, 255, 255, 0.2);
+            animation: floatIcon 6s infinite;
+        }
+
+        .floating-icon:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 30%; right: 25%; animation-delay: 1s; }
+        .floating-icon:nth-child(3) { bottom: 20%; left: 30%; animation-delay: 2s; }
+        .floating-icon:nth-child(4) { bottom: 35%; right: 15%; animation-delay: 3s; }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profile-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px;
+            margin: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(0);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideIn 1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .profile img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: float 6s ease-in-out infinite;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .profile img:hover {
+            transform: rotate(180deg);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-info {
+            text-align: left;
+        }
+
+        .name {
+            font-size: 3em;
+            color: #333;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--bg-color-1, #ff6b6b), var(--bg-color-2, #ffc0cb));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 3s ease infinite;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .name::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(45deg, var(--bg-color-1, #ff6b6b), var(--bg-color-2, #ffc0cb));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .name:hover::after {
+            transform: scaleX(1);
+        }
+
+        .bio {
+            color: #666;
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .bio span {
+            font-weight: 700;
+            color: #333;
+            background: linear-gradient(45deg, var(--bg-color-1, #ff6b6b), var(--bg-color-2, #ffc0cb));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 0 5px;
+        }
+
+        .about-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px;
+            margin: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(0);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideIn 1s ease 0.2s backwards;
+        }
+
+        .about-section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-title {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .about-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--bg-color-1, #ff6b6b), var(--bg-color-2, #ffc0cb));
+            transition: width 0.3s ease;
+        }
+
+        .about-section:hover .about-title::after {
+            width: 100px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .about-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .about-item:hover::before {
+            transform: translateX(100%);
+        }
+
+        .about-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-item i {
+            font-size: 2em;
+            color: var(--bg-color-1, #ff6b6b);
+            margin-bottom: 15px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .about-item:hover i {
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        .about-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .about-item p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            background: #fff;
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #333;
+            font-size: 1.8em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--bg-color-1, #ff6b6b), var(--bg-color-2, #ffc0cb));
+            opacity: 0;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .social-link:hover {
+            transform: translateY(-10px) rotate(5deg) scale(1.1);
+            color: #fff;
+        }
+
+        .social-link:hover::before {
+            opacity: 1;
+        }
+
+        .youtube { color: #FF0000; }
+        .instagram { color: #E1306C; }
+        .facebook { color: #4267B2; }
+        .discord { color: #7289DA; }
+        .twitch { color: #9146FF; }
+
+        @keyframes floatPuzzle {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, -20px) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) rotate(-5deg); }
+            75% { transform: translate(20px, 20px) rotate(5deg); }
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(20px, -20px) rotate(180deg); }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .profile {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-info {
+                text-align: center;
+            }
+            .social-links {
+                justify-content: center;
+            }
+            .color-picker {
+                top: auto;
+                bottom: 20px;
+                right: 20px;
+            }
+            .copyright {
+                bottom: 80px;
+                right: 20px;
+            }
+        }
+
+        .cherry-blossom {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .petal {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #ffd1dc;
+            border-radius: 150% 0 150% 0;
+            transform-origin: 0% 100%;
+            animation: sway 3s ease-in-out infinite;
+        }
+
+        .petal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffd1dc;
+            border-radius: 150% 0 150% 0;
+            transform: rotate(45deg);
+        }
+
+        .petal::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffd1dc;
+            border-radius: 150% 0 150% 0;
+            transform: rotate(-45deg);
+        }
+
+        @keyframes sway {
+            0%, 100% {
+                transform: rotate(0deg) translateX(0);
+            }
+            25% {
+                transform: rotate(5deg) translateX(5px);
+            }
+            75% {
+                transform: rotate(-5deg) translateX(-5px);
+            }
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="color-picker">
+        <input type="color" id="color1" value="#ff6b6b" onchange="updateColors()">
+        <input type="color" id="color2" value="#ffc0cb" onchange="updateColors()">
+    </div>
+
+    <div class="copyright">
+        © 2025 Lemonie_YT. All rights reserved.
+    </div>
+
+    <div class="puzzle-piece"></div>
+    <div class="puzzle-piece"></div>
+    <div class="puzzle-piece"></div>
+    <div class="puzzle-piece"></div>
+
+    <div class="floating-icon"><i class="fab fa-youtube"></i></div>
+    <div class="floating-icon"><i class="fab fa-instagram"></i></div>
+    <div class="floating-icon"><i class="fab fa-discord"></i></div>
+
+    <div class="content">
+        <div class="profile-section">
+            <div class="profile">
+                <img src="me3.webp" alt="Profile Picture">
+                <div class="profile-info">
+                    <h1 class="name">𝑳𝒆𝒎𝒐𝒏𝒊𝒆</h1>
+                    <p class="bio">✨<span>𝘊𝘰𝘯𝘵𝘦𝘯𝘵 𝘊𝘳𝘦𝘢𝘵𝘰𝘳 | 𝘎𝘢𝘮𝘦𝘳 𝘎𝘪𝘳𝘭</span>✨<br>
+                        sʜᴀʀɪɴɢ ᴍʏ ᴊᴏᴜʀɴᴇʏ ᴀɴᴅ ᴘᴀssɪᴏɴ ᴡɪᴛʜ ᴛʜᴇ ᴡᴏʀʟᴅ!
+                        ᴊᴏɪɴ ᴍᴇ ᴏɴ ᴛʜɪs ᴀᴍᴀᴢɪɴɢ ᴀᴅᴠᴇɴᴛᴜʀᴇ 🌟</p>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.youtube.com/@Lemonie_YT" target="_blank" class="social-link youtube"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/lemonie_11__" class="social-link instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://discord.gg/zxPnTqHp" target="_blank" class="social-link discord"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <h2 class="about-title">𝐴𝑏𝑜𝑢𝑡 𝑀𝑒</h2>
+            <div class="about-content">
+                <div class="about-item">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>ɢᴀᴍɪɴɢ</h3>
+                    <p>ᴘᴀssɪᴏɴᴀᴛᴇ ɢᴀᴍᴇʀ ᴡʜᴏ ʟᴏᴠᴇs ᴇxᴘʟᴏʀɪɴɢ ɴᴇᴡ ᴡᴏʀʟᴅs ᴀɴᴅ sʜᴀʀɪɴɢ ɢᴀᴍɪɴɢ ᴀᴅᴠᴇɴᴛᴜʀᴇs ᴡɪᴛʜ ᴍʏ ᴄᴏᴍᴍᴜɴɪᴛʏ.</p>
+                </div>
+                <div class="about-item">
+                    <i class="fas fa-video"></i>
+                    <h3>ᴄᴏɴᴛᴇɴᴛ ᴄʀᴇᴀᴛɪᴏɴ</h3>
+                    <p>ᴄʀᴇᴀᴛɪɴɢ ᴇɴɢᴀɢɪɴɢ ᴄᴏɴᴛᴇɴᴛ ᴛʜᴀᴛ ʙʀɪɴɢs ᴊᴏʏ ᴀɴᴅ ᴇɴᴛᴇʀᴛᴀɪɴᴍᴇɴᴛ ᴛᴏ ᴍʏ ᴀᴍᴀᴢɪɴɢ ᴠɪᴇᴡᴇʀs.</p>
+                </div>
+                <div class="about-item">
+                    <i class="fas fa-heart"></i>
+                    <h3>ᴄᴏᴍᴍᴜɴɪᴛʏ</h3>
+                    <p>ʙᴜɪʟᴅɪɴɢ ᴀ sᴜᴘᴘᴏʀᴛɪᴠᴇ ᴀɴᴅ ғʀɪᴇɴᴅʟʏ ᴄᴏᴍᴍᴜɴɪᴛʏ ᴡʜᴇʀᴇ ᴇᴠᴇʀʏᴏɴᴇ ғᴇᴇʟs ᴡᴇʟᴄᴏᴍᴇ ᴀɴᴅ ᴠᴀʟᴜᴇᴅ.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateColors() {
+            const color1 = document.getElementById('color1').value;
+            const color2 = document.getElementById('color2').value;
+            document.documentElement.style.setProperty('--bg-color-1', color1);
+            document.documentElement.style.setProperty('--bg-color-2', color2);
+        }
+
+        // Create cherry blossoms
+        function createCherryBlossom() {
+            const blossom = document.createElement('div');
+            blossom.className = 'cherry-blossom';
+            
+            // Create multiple petals for each blossom
+            const petalCount = Math.floor(Math.random() * 3) + 3; // 3-5 petals
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                
+                // Random position
+                blossom.style.left = Math.random() * 100 + 'vw';
+                
+                // Random size
+                const size = Math.random() * 8 + 12; // 12-20px
+                petal.style.width = size + 'px';
+                petal.style.height = size + 'px';
+                
+                // Random rotation
+                petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                // Random animation delay
+                petal.style.animationDelay = Math.random() * 2 + 's';
+                
+                blossom.appendChild(petal);
+            }
+            
+            // Random falling speed
+            const duration = Math.random() * 8 + 7; // 7-15 seconds
+            blossom.style.animation = `fall ${duration}s linear forwards`;
+            
+            // Random horizontal movement
+            const swayAmount = Math.random() * 100 - 50; // -50px to 50px
+            blossom.style.setProperty('--sway-amount', `${swayAmount}px`);
+            
+            document.body.appendChild(blossom);
+            
+            // Remove blossom after animation
+            setTimeout(() => {
+                blossom.remove();
+            }, duration * 1000);
+        }
+
+        // Create blossoms periodically
+        setInterval(createCherryBlossom, 500);
+    </script>
+</body>
+</html>
