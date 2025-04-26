@@ -936,12 +936,6 @@
     <div class="floating-icon"><i class="fab fa-discord"></i></div>
 
     <div class="content">
-        <div class="custom-context-menu">
-            <a href="https://www.youtube.com/@Lemonie_YT" target="_blank" class="context-menu-item">
-                <i class="fab fa-youtube"></i>
-                Subscribe to my YouTube! 🍋
-            </a>
-        </div>
         <div class="profile-section">
             <div class="branch-decoration">
                 <div class="branch branch-1"></div>
@@ -1085,6 +1079,32 @@
             if (e.key === 'Escape') {
                 contextMenu.style.display = 'none';
             }
+        });
+
+        // Simple code protection
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            // Prevent Ctrl+U (View Source)
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+            }
+            // Prevent F12 (Developer Tools)
+            if (e.key === 'F12') {
+                e.preventDefault();
+            }
+        });
+
+        // Disable text selection
+        document.addEventListener('selectstart', (e) => {
+            e.preventDefault();
+        });
+
+        // Disable copy
+        document.addEventListener('copy', (e) => {
+            e.preventDefault();
         });
     </script>
 </body>
