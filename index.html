@@ -1,3 +1,6 @@
+
+<!-- THIS CODE IS MADE BY Xyco. I'M ORGINAL OWNER OF THIS CODE. -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,6 +69,33 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             animation: fadeIn 1s ease;
+        }
+
+        .view-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            color: #666;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            animation: fadeIn 1s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .view-counter:hover {
+            transform: translateY(-5px);
+        }
+
+        .view-counter i {
+            color: var(--bg-color-1, #ff6b6b);
+            font-size: 1.2em;
         }
 
         .puzzle-piece {
@@ -380,6 +410,7 @@
             margin-bottom: 10px;
             background: linear-gradient(45deg, var(--bg-color-1, #ff6b6b), var(--bg-color-2, #ffc0cb));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: gradientText 3s ease infinite;
             position: relative;
@@ -419,6 +450,7 @@
             color: #333;
             background: linear-gradient(45deg, var(--bg-color-1, #ff6b6b), var(--bg-color-2, #ffc0cb));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             padding: 0 5px;
             position: relative;
@@ -597,7 +629,7 @@
 
         .youtube { color: #FF0000; }
         .instagram { color: #E1306C; }
-        .facebook { color: #4267B2; }
+        /* .facebook { color: #4267B2; } */
         .discord { color: #7289DA; }
         .twitch { color: #9146FF; }
 
@@ -656,15 +688,175 @@
             }
         }
 
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 768px) {
             .profile {
                 flex-direction: column;
                 text-align: center;
                 gap: 20px;
+                padding: 20px;
             }
 
             .profile-info {
                 text-align: center;
+                padding: 0 15px;
+            }
+
+            .profile img {
+                width: 180px;
+                height: 180px;
+                margin: 0 auto;
+                border-width: 4px;
+            }
+
+            .name {
+                font-size: 2.5em;
+                margin-bottom: 15px;
+            }
+
+            .bio {
+                font-size: 1.1em;
+                line-height: 1.6;
+                padding: 0 10px;
+                margin-bottom: 25px;
+            }
+
+            .social-links {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin-top: 25px;
+            }
+
+            .social-link {
+                width: 60px;
+                height: 60px;
+                font-size: 1.6em;
+                border-radius: 15px;
+            }
+
+            .color-picker {
+                top: auto;
+                bottom: 20px;
+                right: 20px;
+                padding: 12px;
+                border-radius: 12px;
+            }
+
+            .copyright {
+                bottom: 90px;
+                right: 20px;
+                font-size: 0.85em;
+                padding: 10px 15px;
+                border-radius: 12px;
+            }
+
+            .view-counter {
+                bottom: 20px;
+                left: 20px;
+                padding: 10px 15px;
+                border-radius: 12px;
+                font-size: 0.85em;
+            }
+
+            .about-section {
+                padding: 25px;
+                margin: 15px;
+                border-radius: 25px;
+            }
+
+            .about-title {
+                font-size: 2em;
+                margin-bottom: 20px;
+                padding: 15px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 10px;
+            }
+
+            .about-item {
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            .about-item i {
+                font-size: 2em;
+                margin-bottom: 15px;
+            }
+
+            .about-item h3 {
+                font-size: 1.3em;
+                margin-bottom: 12px;
+            }
+
+            .about-item p {
+                font-size: 1em;
+                line-height: 1.6;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .profile-section {
+                padding: 25px;
+                margin: 15px;
+                border-radius: 25px;
+            }
+
+            .hover-message {
+                display: none;
+            }
+
+            /* Improve touch targets */
+            .social-link,
+            .about-item,
+            .profile img {
+                cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            /* Add better spacing for mobile */
+            .profile-section,
+            .about-section {
+                margin-bottom: 30px;
+            }
+
+            /* Improve text readability */
+            .bio,
+            .about-item p {
+                letter-spacing: 0.3px;
+                word-spacing: 1px;
+            }
+
+            /* Add subtle animations for mobile */
+            .profile-section,
+            .about-section {
+                animation: slideUp 0.5s ease-out;
+            }
+
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+
+        @media (max-width: 480px) {
+            .name {
+                font-size: 2.2em;
             }
 
             .profile img {
@@ -672,58 +864,34 @@
                 height: 150px;
             }
 
-            .name {
-                font-size: 2.5em;
-            }
-
-            .bio {
-                font-size: 1em;
-                padding: 0 10px;
-            }
-
-            .social-links {
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 15px;
-            }
-
             .social-link {
                 width: 50px;
                 height: 50px;
-                font-size: 1.5em;
-            }
-
-            .color-picker {
-                top: auto;
-                bottom: 20px;
-                right: 20px;
-                padding: 10px;
-            }
-
-            .copyright {
-                bottom: 80px;
-                right: 20px;
-                font-size: 0.8em;
-                padding: 8px 12px;
-            }
-
-            .branch-decoration {
-                display: none;
-            }
-
-            .about-section {
-                padding: 20px;
-                margin: 10px;
+                font-size: 1.4em;
             }
 
             .about-title {
                 font-size: 1.8em;
-                margin-bottom: 15px;
             }
 
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 15px;
+            .color-picker {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px;
+            }
+
+            .copyright {
+                bottom: 75px;
+                right: 15px;
+                font-size: 0.8em;
+                padding: 8px 12px;
+            }
+
+            .view-counter {
+                bottom: 15px;
+                left: 15px;
+                padding: 8px 12px;
+                font-size: 0.8em;
             }
 
             .about-item {
@@ -731,7 +899,7 @@
             }
 
             .about-item i {
-                font-size: 1.5em;
+                font-size: 1.8em;
             }
 
             .about-item h3 {
@@ -739,54 +907,7 @@
             }
 
             .about-item p {
-                font-size: 0.9em;
-            }
-
-            .content {
-                padding: 20px;
-            }
-
-            .profile-section {
-                padding: 20px;
-                margin: 10px;
-            }
-
-            .hover-message {
-                display: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .name {
-                font-size: 2em;
-            }
-
-            .profile img {
-                width: 120px;
-                height: 120px;
-            }
-
-            .social-link {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2em;
-            }
-
-            .about-title {
-                font-size: 1.5em;
-            }
-
-            .color-picker {
-                bottom: 10px;
-                right: 10px;
-                padding: 8px;
-            }
-
-            .copyright {
-                bottom: 60px;
-                right: 10px;
-                font-size: 0.7em;
-                padding: 6px 10px;
+                font-size: 0.95em;
             }
         }
 
@@ -924,6 +1045,11 @@
 
     <div class="copyright">
         © 2025 Lemonie_YT. All rights reserved.
+    </div>
+
+    <div class="view-counter">
+        <i class="fas fa-eye"></i>
+        <span id="viewCount">0</span> views
     </div>
 
     <div class="puzzle-piece"></div>
@@ -1081,31 +1207,34 @@
             }
         });
 
-        // Simple code protection
-        document.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-        });
+        // Add view counter
+        let viewCount = localStorage.getItem('viewCount') || 0;
+        viewCount = parseInt(viewCount) + 1;
+        localStorage.setItem('viewCount', viewCount);
+        
+        const viewCountElement = document.getElementById('viewCount');
+        viewCountElement.style.opacity = '0';
+        viewCountElement.style.animation = 'countUp 0.5s ease forwards';
+        viewCountElement.textContent = viewCount.toLocaleString();
 
-        document.addEventListener('keydown', (e) => {
-            // Prevent Ctrl+U (View Source)
-            if (e.ctrlKey && e.key === 'u') {
-                e.preventDefault();
-            }
-            // Prevent F12 (Developer Tools)
-            if (e.key === 'F12') {
-                e.preventDefault();
-            }
-        });
+        // Add smooth number animation
+        function animateNumber(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const current = Math.floor(progress * (end - start) + start);
+                element.textContent = current.toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
 
-        // Disable text selection
-        document.addEventListener('selectstart', (e) => {
-            e.preventDefault();
-        });
-
-        // Disable copy
-        document.addEventListener('copy', (e) => {
-            e.preventDefault();
-        });
+        // Animate the view count
+        animateNumber(viewCountElement, 0, viewCount, 1000);
     </script>
 </body>
 </html>
+<!-- THIS CODE IS MADE BY Xyco. I'M ORGINAL OWNER OF THIS CODE. -->
