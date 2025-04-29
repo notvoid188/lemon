@@ -332,15 +332,368 @@
             border-radius: 50%;
             border: 5px solid #fff;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            animation: float 6s ease-in-out infinite;
+            animation: floatProfile 6s ease-in-out infinite;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
+            object-fit: cover;
         }
 
-        .profile img:hover {
+        @keyframes floatProfile {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            25% {
+                transform: translateY(-15px) rotate(3deg) scale(1.02);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            }
+            50% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            75% {
+                transform: translateY(15px) rotate(-3deg) scale(0.98);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .profile img.playing {
+            animation: musicPulse 1.5s infinite, floatProfile 6s ease-in-out infinite;
+            filter: brightness(1.1) saturate(1.2);
+            border-color: var(--bg-color-1, #ff6b6b);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
             transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile img.paused {
+            animation: floatProfile 6s ease-in-out infinite;
+            filter: brightness(1) saturate(1);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .play-button-overlay {
+            position: absolute;
+            bottom: -60px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 5;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid var(--bg-color-1, #ff6b6b);
+            backdrop-filter: blur(5px);
+        }
+
+        .play-button-overlay.active {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: var(--bg-color-2, #ffc0cb);
+            animation: pulseButton 0.8s infinite, rotateButton 2s infinite, glowButton 1.5s infinite;
+        }
+
+        @keyframes pulseButton {
+            0% {
+                transform: scale(1) rotate(0deg);
+                box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            }
+            25% {
+                transform: scale(1.15) rotate(5deg);
+                box-shadow: 0 0 30px rgba(255, 107, 107, 0.8);
+            }
+            50% {
+                transform: scale(1) rotate(0deg);
+                box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            }
+            75% {
+                transform: scale(1.15) rotate(-5deg);
+                box-shadow: 0 0 30px rgba(255, 107, 107, 0.8);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            }
+        }
+
+        @keyframes rotateButton {
+            0% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(8deg);
+            }
+            50% {
+                transform: rotate(0deg);
+            }
+            75% {
+                transform: rotate(-8deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes glowButton {
+            0% {
+                box-shadow: 0 0 15px rgba(255, 107, 107, 0.5),
+                            0 0 30px rgba(255, 192, 203, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(255, 107, 107, 0.8),
+                            0 0 45px rgba(255, 192, 203, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(255, 107, 107, 0.5),
+                            0 0 30px rgba(255, 192, 203, 0.3);
+            }
+        }
+
+        .play-button-overlay i {
+            font-size: 18px;
+            color: var(--bg-color-1, #ff6b6b);
+            transition: all 0.3s ease;
+            animation: pulseIcon 0.8s infinite, rotateIcon 2s infinite;
+        }
+
+        @keyframes pulseIcon {
+            0% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.3);
+            }
+            50% {
+                transform: scale(1);
+            }
+            75% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes rotateIcon {
+            0% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(90deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+            75% {
+                transform: rotate(270deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .play-button-overlay:hover {
+            transform: scale(1.2);
+            background: rgba(255, 255, 255, 1);
+            border-color: var(--bg-color-2, #ffc0cb);
+            animation: none;
+        }
+
+        .play-button-overlay:hover i {
+            color: var(--bg-color-2, #ffc0cb);
+            transform: scale(1.3) rotate(360deg);
+            animation: none;
+        }
+
+        .music-note {
+            position: absolute;
+            font-size: 20px;
+            color: var(--bg-color-1, #ff6b6b);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 2;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: floatNote 2s ease-out forwards;
+        }
+
+        @keyframes floatNote {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            25% {
+                transform: translateY(-25px) rotate(90deg) scale(1.1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-50px) rotate(180deg) scale(1);
+                opacity: 0.6;
+            }
+            75% {
+                transform: translateY(-75px) rotate(270deg) scale(0.9);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        .music-note.paused {
+            animation: floatNotePaused 2s ease-out forwards;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes floatNotePaused {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.5;
+            }
+            25% {
+                transform: translateY(-15px) rotate(-45deg) scale(0.9);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateY(-30px) rotate(-90deg) scale(0.8);
+                opacity: 0.3;
+            }
+            75% {
+                transform: translateY(-45px) rotate(-135deg) scale(0.7);
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-60px) rotate(-180deg) scale(0.6);
+                opacity: 0;
+            }
+        }
+
+        .song-subtitle {
+            position: absolute;
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #333;
+            opacity: 0;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .song-subtitle.active {
+            animation: slideUp 0.5s ease forwards, glowText 2s infinite;
+            background: rgba(255, 255, 255, 0.98);
+            color: var(--bg-color-1, #ff6b6b);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .song-subtitle.inactive {
+            animation: slideDown 0.5s ease forwards;
+            background: rgba(255, 255, 255, 0.9);
+            color: #666;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translate(-50%, 20px);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+            to {
+                transform: translate(-50%, 20px);
+                opacity: 0;
+            }
+        }
+
+        .status-indicator {
+            position: absolute;
+            bottom: -60px;
+            right: 15px;
+            width: 8px;
+            height: 8px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+
+        .status-indicator.active {
+            opacity: 1;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .profile img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .profile img.playing::after {
+            opacity: 1;
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
         }
 
         .hover-message {
@@ -357,9 +710,10 @@
             opacity: 0;
             transition: all 0.3s ease;
             pointer-events: none;
-            z-index: 3;
+            z-index: 10;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            display: block;
         }
 
         .hover-message::after {
@@ -375,28 +729,9 @@
             border-left: 8px solid var(--bg-color-2, #ffc0cb);
         }
 
-        .profile img:hover + .hover-message {
+        .profile:hover .hover-message {
             transform: translate(0, -50%) scale(1);
             opacity: 1;
-        }
-
-        @keyframes float {
-            0%, 100% { 
-                transform: translateY(0) rotate(0deg);
-                filter: brightness(1);
-            }
-            25% { 
-                transform: translateY(-5px) rotate(5deg);
-                filter: brightness(1.1);
-            }
-            50% { 
-                transform: translateY(0) rotate(0deg);
-                filter: brightness(1);
-            }
-            75% { 
-                transform: translateY(5px) rotate(-5deg);
-                filter: brightness(0.9);
-            }
         }
 
         .profile-info {
@@ -671,11 +1006,6 @@
             100% { background-position: 200% 0; }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         @keyframes glow {
             0%, 100% {
                 text-shadow: 0 0 10px rgba(255, 107, 107, 0.3),
@@ -690,6 +1020,17 @@
         @keyframes countUp {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes glowText {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(255, 107, 107, 0.5),
+                            0 0 20px rgba(255, 192, 203, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(255, 107, 107, 0.8),
+                            0 0 30px rgba(255, 192, 203, 0.8);
+            }
         }
 
         @media (max-width: 768px) {
@@ -973,13 +1314,6 @@
             }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-5px) rotate(5deg); }
-            50% { transform: translateY(0) rotate(0deg); }
-            75% { transform: translateY(5px) rotate(-5deg); }
-        }
-
         .leaf, .cherry-blossom, .cherry {
             animation: float 4s ease-in-out infinite, sway 3s ease-in-out infinite;
         }
@@ -1034,6 +1368,88 @@
         .context-menu-item i {
             font-size: 1.2em;
         }
+
+        .profile img:hover + .play-button-overlay,
+        .profile img:hover ~ .status-indicator,
+        .profile img:hover ~ .audio-wave,
+        .profile img:hover ~ .hover-message {
+            opacity: 1;
+        }
+
+        .profile:hover .play-button-overlay,
+        .profile:hover .status-indicator,
+        .profile:hover .audio-wave,
+        .profile:hover .hover-message {
+            opacity: 0;
+        }
+
+        .floating-box {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            z-index: -1;
+            animation: floatBox 15s infinite ease-in-out;
+        }
+
+        .floating-box:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .floating-box:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-box:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            bottom: 15%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+
+        .floating-box:nth-child(4) {
+            width: 90px;
+            height: 90px;
+            bottom: 25%;
+            right: 20%;
+            animation-delay: 6s;
+        }
+
+        .floating-box:nth-child(5) {
+            width: 70px;
+            height: 70px;
+            top: 40%;
+            left: 30%;
+            animation-delay: 8s;
+        }
+
+        @keyframes floatBox {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(50px, -50px) rotate(5deg);
+            }
+            50% {
+                transform: translate(0, -100px) rotate(0deg);
+            }
+            75% {
+                transform: translate(-50px, -50px) rotate(-5deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
     </style>
 </head>
 <body>
@@ -1060,6 +1476,12 @@
     <div class="floating-icon"><i class="fab fa-instagram"></i></div>
     <div class="floating-icon"><i class="fab fa-discord"></i></div>
 
+    <div class="floating-box"></div>
+    <div class="floating-box"></div>
+    <div class="floating-box"></div>
+    <div class="floating-box"></div>
+    <div class="floating-box"></div>
+
     <div class="content">
         <div class="profile-section">
             <div class="branch-decoration">
@@ -1077,6 +1499,13 @@
             </div>
             <div class="profile">
                 <img src="me3.webp" alt="Profile Picture">
+                <div class="play-button-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div class="audio-wave"></div>
+                <div class="status-indicator"></div>
+                <div class="music-note">♪</div>
+                <div class="song-subtitle">Now Playing: Lemonie's Theme 🎵</div>
                 <div class="hover-message">Hey there! I'm Lemonie 🍋</div>
                 <div class="profile-info">
                     <h1 class="name">𝑳𝒆𝒎𝒐𝒏𝒊𝒆</h1>
@@ -1233,6 +1662,98 @@
 
         // Call the function when page loads
         document.addEventListener('DOMContentLoaded', updateViewCount);
+
+        // Audio functionality
+        const audio = new Audio('so.mp3');
+        const playButton = document.querySelector('.play-button-overlay');
+        const playIcon = playButton.querySelector('i');
+        const audioWave = document.querySelector('.audio-wave');
+        const statusIndicator = document.querySelector('.status-indicator');
+        const musicNote = document.querySelector('.music-note');
+        let isPlaying = false;
+
+        function createMusicNote() {
+            const notes = ['♪', '♫'];
+            const note = document.createElement('div');
+            note.className = 'music-note';
+            note.textContent = notes[Math.floor(Math.random() * notes.length)];
+            note.style.left = (Math.random() * 100) + 'px';
+            note.style.bottom = '-60px';
+            
+            if (!isPlaying) {
+                note.classList.add('paused');
+            }
+            
+            document.querySelector('.profile').appendChild(note);
+            
+            setTimeout(() => {
+                note.remove();
+            }, 2000);
+        }
+
+        let noteInterval;
+        const songSubtitle = document.querySelector('.song-subtitle');
+        const profileImage = document.querySelector('.profile img');
+
+        playButton.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                playIcon.className = 'fas fa-play';
+                audioWave.classList.remove('active');
+                statusIndicator.classList.remove('active');
+                playButton.classList.remove('active');
+                playButton.classList.add('inactive');
+                songSubtitle.classList.remove('active');
+                songSubtitle.classList.add('inactive');
+                profileImage.classList.remove('playing');
+                profileImage.classList.add('paused');
+                clearInterval(noteInterval);
+                
+                // Create one final paused note
+                createMusicNote();
+            } else {
+                audio.play();
+                playIcon.className = 'fas fa-pause';
+                audioWave.classList.add('active');
+                statusIndicator.classList.add('active');
+                playButton.classList.add('active');
+                playButton.classList.remove('inactive');
+                songSubtitle.classList.remove('inactive');
+                songSubtitle.classList.add('active');
+                songSubtitle.style.opacity = '1';
+                profileImage.classList.add('playing');
+                profileImage.classList.remove('paused');
+                
+                // Create music notes periodically while playing
+                noteInterval = setInterval(createMusicNote, 600);
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Reset when audio ends
+        audio.addEventListener('ended', () => {
+            playIcon.className = 'fas fa-play';
+            audioWave.classList.remove('active');
+            statusIndicator.classList.remove('active');
+            playButton.classList.remove('active');
+            playButton.classList.add('inactive');
+            songSubtitle.classList.remove('active');
+            songSubtitle.classList.add('inactive');
+            profileImage.classList.remove('playing');
+            profileImage.classList.add('paused');
+            clearInterval(noteInterval);
+            
+            // Create one final paused note
+            createMusicNote();
+            isPlaying = false;
+        });
+
+        // Show play button by default
+        document.addEventListener('DOMContentLoaded', () => {
+            playButton.style.opacity = '1';
+            const songSubtitle = document.querySelector('.song-subtitle');
+            songSubtitle.textContent = "Now Playing: Lemonie's Theme 🎵";
+        });
     </script>
 </body>
 </html>
