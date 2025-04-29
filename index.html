@@ -593,6 +593,10 @@
             z-index: 10;
             backdrop-filter: blur(5px);
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
         }
 
         .song-subtitle.active {
@@ -627,6 +631,221 @@
             to {
                 transform: translate(-50%, 20px);
                 opacity: 0;
+            }
+        }
+
+        .song-subtitle i {
+            font-size: 1.2em;
+            animation: musicIcon 1.5s infinite;
+        }
+
+        @keyframes musicIcon {
+            0% {
+                transform: scale(1) rotate(0deg);
+            }
+            25% {
+                transform: scale(1.2) rotate(90deg);
+            }
+            50% {
+                transform: scale(1) rotate(180deg);
+            }
+            75% {
+                transform: scale(1.2) rotate(270deg);
+            }
+            100% {
+                transform: scale(1) rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 10px;
+            }
+
+            .profile-section {
+                padding: 15px;
+                margin: 10px;
+                border-radius: 20px;
+            }
+
+            .profile {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+                padding: 10px;
+            }
+
+            .profile img {
+                width: 160px;
+                height: 160px;
+                margin: 0 auto;
+                border-width: 4px;
+            }
+
+            .play-button-overlay {
+                bottom: -40px;
+                right: 50%;
+                transform: translateX(50%);
+                width: 45px;
+                height: 45px;
+                background: rgba(255, 255, 255, 0.98);
+                border: 2px solid var(--bg-color-1, #ff6b6b);
+                box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            }
+
+            .play-button-overlay i {
+                font-size: 18px;
+            }
+
+            .song-subtitle {
+                bottom: -60px;
+                font-size: 0.8em;
+                padding: 6px 12px;
+                width: 90%;
+                max-width: 280px;
+                text-align: center;
+                justify-content: center;
+                background: rgba(255, 255, 255, 0.98);
+                border-radius: 15px;
+            }
+
+            .name {
+                font-size: 2em;
+                margin-bottom: 5px;
+            }
+
+            .bio {
+                font-size: 0.9em;
+                line-height: 1.5;
+                padding: 0 5px;
+                margin-bottom: 15px;
+            }
+
+            .social-links {
+                justify-content: center;
+                gap: 12px;
+                margin-top: 15px;
+            }
+
+            .social-link {
+                width: 45px;
+                height: 45px;
+                font-size: 1.4em;
+                border-radius: 15px;
+            }
+
+            .about-section {
+                padding: 15px;
+                margin: 10px;
+                border-radius: 20px;
+            }
+
+            .about-title {
+                font-size: 1.8em;
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .about-item {
+                padding: 12px;
+                border-radius: 15px;
+            }
+
+            .about-item i {
+                font-size: 1.6em;
+                margin-bottom: 10px;
+            }
+
+            .about-item h3 {
+                font-size: 1.1em;
+                margin-bottom: 8px;
+            }
+
+            .about-item p {
+                font-size: 0.85em;
+                line-height: 1.5;
+            }
+
+            .color-picker {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px;
+                border-radius: 12px;
+            }
+
+            .copyright {
+                bottom: 70px;
+                right: 15px;
+                font-size: 0.8em;
+                padding: 8px 12px;
+                border-radius: 12px;
+            }
+
+            .view-counter {
+                bottom: 15px;
+                left: 15px;
+                padding: 8px 12px;
+                font-size: 0.8em;
+                border-radius: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile img {
+                width: 140px;
+                height: 140px;
+            }
+
+            .play-button-overlay {
+                bottom: -35px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .song-subtitle {
+                bottom: -55px;
+                font-size: 0.75em;
+                padding: 5px 10px;
+                width: 85%;
+            }
+
+            .name {
+                font-size: 1.8em;
+            }
+
+            .bio {
+                font-size: 0.85em;
+            }
+
+            .social-link {
+                width: 40px;
+                height: 40px;
+                font-size: 1.3em;
+            }
+
+            .about-title {
+                font-size: 1.6em;
+            }
+
+            .about-item {
+                padding: 10px;
+            }
+
+            .about-item i {
+                font-size: 1.5em;
+            }
+
+            .about-item h3 {
+                font-size: 1em;
+            }
+
+            .about-item p {
+                font-size: 0.8em;
             }
         }
 
@@ -1192,6 +1411,104 @@
                     transform: translateY(0);
                 }
             }
+
+            .play-button-overlay {
+                bottom: -50px;
+                right: 50%;
+                transform: translateX(50%);
+                width: 50px;
+                height: 50px;
+            }
+
+            .play-button-overlay i {
+                font-size: 20px;
+            }
+
+            .play-button-overlay.active {
+                animation: mobilePulse 0.8s infinite, mobileGlow 1.5s infinite;
+            }
+
+            @keyframes mobilePulse {
+                0% {
+                    transform: translateX(50%) scale(1);
+                }
+                50% {
+                    transform: translateX(50%) scale(1.1);
+                }
+                100% {
+                    transform: translateX(50%) scale(1);
+                }
+            }
+
+            @keyframes mobileGlow {
+                0% {
+                    box-shadow: 0 0 20px rgba(255, 107, 107, 0.5),
+                                0 0 40px rgba(255, 192, 203, 0.3);
+                }
+                50% {
+                    box-shadow: 0 0 30px rgba(255, 107, 107, 0.8),
+                                0 0 50px rgba(255, 192, 203, 0.5);
+                }
+                100% {
+                    box-shadow: 0 0 20px rgba(255, 107, 107, 0.5),
+                                0 0 40px rgba(255, 192, 203, 0.3);
+                }
+            }
+
+            .play-button-overlay:hover {
+                transform: translateX(50%) scale(1.1);
+            }
+
+            .play-button-overlay {
+                bottom: -30px;
+                right: 50%;
+                transform: translateX(50%);
+                width: 45px;
+                height: 45px;
+                background: rgba(255, 255, 255, 0.98);
+                border: 2px solid var(--bg-color-1, #ff6b6b);
+                box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            }
+
+            .song-subtitle {
+                position: absolute;
+                bottom: -50px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(255, 255, 255, 0.98);
+                padding: 6px 12px;
+                border-radius: 15px;
+                font-size: 0.8em;
+                color: var(--bg-color-1, #ff6b6b);
+                opacity: 0;
+                transition: all 0.3s ease;
+                white-space: nowrap;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                z-index: 10;
+                backdrop-filter: blur(5px);
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                pointer-events: none;
+                width: 90%;
+                max-width: 280px;
+                text-align: center;
+            }
+
+            .song-subtitle.active {
+                animation: slideUp 0.5s ease forwards, glowText 2s infinite;
+                background: rgba(255, 255, 255, 0.98);
+                color: var(--bg-color-1, #ff6b6b);
+                box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+            }
+
+            .song-subtitle.inactive {
+                animation: slideDown 0.5s ease forwards;
+                background: rgba(255, 255, 255, 0.9);
+                color: #666;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1248,6 +1565,23 @@
 
             .about-item p {
                 font-size: 0.95em;
+            }
+
+            .play-button-overlay {
+                bottom: -25px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .play-button-overlay i {
+                font-size: 18px;
+            }
+
+            .song-subtitle {
+                bottom: -45px;
+                font-size: 0.75em;
+                padding: 5px 10px;
+                width: 85%;
             }
         }
 
@@ -1505,7 +1839,9 @@
                 <div class="audio-wave"></div>
                 <div class="status-indicator"></div>
                 <div class="music-note">♪</div>
-                <div class="song-subtitle">Now Playing: Lemonie's Theme 🎵</div>
+                <div class="song-subtitle">
+                    Now Playing: Lemonie's Theme <i class="fas fa-music"></i>
+                </div>
                 <div class="hover-message">Hey there! I'm Lemonie 🍋</div>
                 <div class="profile-info">
                     <h1 class="name">𝑳𝒆𝒎𝒐𝒏𝒊𝒆</h1>
